@@ -39,11 +39,13 @@ fun BottomSheet(
     onItemClick: (name: String) -> Unit
 ) {
     val lazyColumnState = rememberLazyListState()
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight(0.6f) // 60% expand of bottom sheet
-        .background(color = MineShaft)
-        .padding(top = 33.dp, start = 33.dp, end = 33.dp),) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.6f) // 60% expand of bottom sheet
+            .background(color = MineShaft)
+            .padding(top = 33.dp, start = 33.dp, end = 33.dp),
+    ) {
         LazyColumn(
             modifier = modifier
                 .fillMaxSize(),

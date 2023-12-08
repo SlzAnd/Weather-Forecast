@@ -12,15 +12,18 @@ import kotlin.math.sqrt
 
 class MapRepositoryImpl(
     private val api: OpenWeatherMapApi
-): MapRepository {
+) : MapRepository {
 
-    override suspend fun getCitiesInTheArea(updatedBounds: LatLngBounds, zoom: Float): Resource<List<CityInfo>> {
+    override suspend fun getCitiesInTheArea(
+        updatedBounds: LatLngBounds,
+        zoom: Float
+    ): Resource<List<CityInfo>> {
         val boundingBox = convertLatLngBoundsToBoundingBox(updatedBounds, zoom)
 
         return try {
             val list = api.getListOfCities(boundingBox).toCityInfoList()
             Resource.Success(data = list)
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
             Resource.Error(message = e.message ?: "API request was failed")
         }

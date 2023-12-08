@@ -9,21 +9,27 @@ sealed class WeatherIcon(
     object ClearSky : WeatherIcon(
         iconRes = R.drawable.ic_sunny
     )
+
     object Thunderstorm : WeatherIcon(
         iconRes = R.drawable.ic_thunderstorm
     )
+
     object PartlySunny : WeatherIcon(
         iconRes = R.drawable.ic_partly_sunny
     )
+
     object Rain : WeatherIcon(
         iconRes = R.drawable.ic_rainy
     )
+
     object Snow : WeatherIcon(
         iconRes = R.drawable.snowflake
     )
+
     object Mist : WeatherIcon(
         iconRes = R.drawable.ic_fog
     )
+
     object Drizzle : WeatherIcon(
         iconRes = R.drawable.drizzle
     )
@@ -31,7 +37,7 @@ sealed class WeatherIcon(
 
     companion object {
         fun fromIconCode(code: Int): WeatherIcon {
-            return when(code) {
+            return when (code) {
                 in 200..232 -> Thunderstorm
                 in 300..321 -> Drizzle
                 in 500..531 -> Rain

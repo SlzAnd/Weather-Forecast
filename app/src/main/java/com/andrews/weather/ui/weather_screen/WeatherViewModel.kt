@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class WeatherViewModel(
     repository: WeatherRepository,
     savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(WeatherState())
     val state = _state.asStateFlow()
@@ -22,16 +22,10 @@ class WeatherViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 _state.value = _state.value.copy(
                     cityName = cityName,
-                    currentWeather = repository.getWeather(cityName),
-                    dailyWeatherList = repository.getWeatherForecast(cityName)
+                    dailyWeatherList = repository.getWeatherForecast(cityName),
+                    currentWeather = repository.getWeather(cityName)
                 )
             }
         }
-    }
-
-    fun changeConnectionStatus(isConnected: Boolean) {
-        _state.value = _state.value.copy(
-            isConnected = isConnected
-        )
     }
 }

@@ -9,13 +9,14 @@ import com.andrews.weather.domain.repository.WeatherRepository
 
 class WeatherRepositoryImpl(
     private val api: OpenWeatherMapApi
-): WeatherRepository {
+) : WeatherRepository {
 
-    override suspend fun getWeather(city: String): CurrentWeather =
-        api.getWeatherDataForCity(city).toCurrentWeather()
-
+    override suspend fun getWeather(city: String): CurrentWeather {
+        return api.getWeatherDataForCity(city).toCurrentWeather()
+    }
 
     override suspend fun getWeatherForecast(city: String): List<DailyWeather> {
         return api.getWeatherForecastForCity(city).toCityWeatherForecast()
     }
 }
+

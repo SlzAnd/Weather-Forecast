@@ -5,6 +5,8 @@ import com.andrews.weather.domain.util.Resource
 import com.google.android.gms.maps.model.LatLngBounds
 
 interface MapRepository {
-
-    suspend fun getCitiesInTheArea(updatedBounds: LatLngBounds, zoom: Float): Resource<List<CityInfo>>
+    suspend fun getCitiesInTheArea(
+        updatedBounds: LatLngBounds,
+        zoom: Float
+    ): Resource<List<CityInfo>>
 }

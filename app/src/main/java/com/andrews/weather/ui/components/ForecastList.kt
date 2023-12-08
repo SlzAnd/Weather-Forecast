@@ -57,7 +57,7 @@ fun ForecastList(
             modifier = modifier
                 .padding(horizontal = 33.dp)
         ) {
-            items(items = list, key = {it.dayOfTheWeek}) {weather ->
+            items(items = list, key = { it.dayOfTheWeek }) { weather ->
                 DailyWeatherItem(
                     dayOfWeek = weather.dayOfTheWeek,
                     weatherIcon = weather.icon,
@@ -109,8 +109,8 @@ fun DailyWeatherItem(
                 Image(
                     painter = painterResource(id = weatherIcon.iconRes),
                     contentDescription = "weather icon",
-                     modifier = Modifier
-                         .size(28.dp)
+                    modifier = Modifier
+                        .size(28.dp)
                 )
 
                 Spacer(modifier = Modifier.width(6.dp))
@@ -145,7 +145,8 @@ fun DailyWeatherItem(
 
                 // space between temperatures
                 if (dayTemp > 9 || dayTemp < -9 ||
-                    nightTemp > 9 || nightTemp < -9) {
+                    nightTemp > 9 || nightTemp < -9
+                ) {
                     Spacer(modifier = Modifier.width(15.dp))
                 } else {
                     Spacer(modifier = Modifier.width(30.dp))
@@ -171,7 +172,7 @@ fun DailyWeatherItem(
                 .background(color = Alto18)
         )
     }
-    
+
 }
 
 val testList = listOf(

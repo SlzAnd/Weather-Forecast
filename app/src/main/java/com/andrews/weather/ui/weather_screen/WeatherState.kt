@@ -7,5 +7,4 @@ data class WeatherState(
     val cityName: String = "",
     val currentWeather: CurrentWeather? = null,
     val dailyWeatherList: List<DailyWeather> = emptyList(),
-    val isConnected: Boolean = true,
 )

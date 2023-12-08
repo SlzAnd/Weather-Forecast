@@ -4,5 +4,6 @@ data class CityWeatherDto(
     val name: String,
     val dt: Int,
     val main: Main,
-    val weather: Weather
+    val weather: List<Weather>,
+    val timezone: Int
 )

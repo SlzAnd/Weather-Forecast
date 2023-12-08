@@ -1,16 +1,12 @@
 package com.andrews.weather.data.mappers
 
-import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.andrews.weather.data.model.CitiesDto
 import com.andrews.weather.domain.model.CityInfo
-import java.text.SimpleDateFormat
 import java.time.Instant
-import java.time.LocalTime
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Date
+
 
 fun CitiesDto.toCityInfoList(): List<CityInfo> =
     list.map { cityDto ->
@@ -22,10 +18,11 @@ fun CitiesDto.toCityInfoList(): List<CityInfo> =
         )
     }
 
-
-@SuppressLint("SimpleDateFormat")
 private fun convertUnixTimestampToTime(unixTimestamp: Long): String {
-    val date = Date(unixTimestamp * 1000)
-    val format = SimpleDateFormat("HH:mm")
-    return format.format(date)
+    val localDateTime = LocalDateTime.ofInstant(
+        Instant.ofEpochMilli(unixTimestamp * 1000),
+        ZoneId.systemDefault()
+    )
+    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+    return localDateTime.format(formatter)
 }
