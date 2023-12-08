@@ -149,76 +149,77 @@ fun MapScreen(
         }
     }
 
+    if (state.isConnected) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            GoogleMap(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 33.dp),
+                properties = mapProperties,
+                uiSettings = mapUiSettings,
+                cameraPositionState = cameraPositionState
+            ) {
+                MapEffect(state.lastKnownLocation) { map ->
+                    map.setOnMapLoadedCallback {
+                        scope.launch {
+                            cameraPositionState.animate(
+                                update = CameraUpdateFactory.newLatLng(currentLocation)
+                            )
+                        }
+                    }
+                }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        GoogleMap(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 33.dp),
-            properties = mapProperties,
-            uiSettings = mapUiSettings,
-            cameraPositionState = cameraPositionState
-        ) {
-            MapEffect(state.lastKnownLocation) { map ->
-                map.setOnMapLoadedCallback {
-                    scope.launch {
-                        cameraPositionState.animate(
-                            update = CameraUpdateFactory.newLatLng(currentLocation)
+                MapEffect(cameraPositionState.position) { map ->
+                    delay(1000)
+                    viewModel.updateBounds(
+                        map.projection.visibleRegion.latLngBounds,
+                        map.cameraPosition.zoom
+                    )
+                }
+            }
+
+            if (!permissionState.status.isGranted) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .background(MineShaft77),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Sorry, we don't know your location, ",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight(500),
+                            color = Color.White
+                        )
+                    )
+                    TextButton(
+                        onClick = {
+                            askUserForOpeningAppSettings()
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MineShaft,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(
+                            text = "more information",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontFamily = poppinsFontFamily,
+                                fontWeight = FontWeight(500),
+                            )
                         )
                     }
                 }
             }
 
-            MapEffect(cameraPositionState.position) { map ->
-                delay(1000)
-                viewModel.updateBounds(
-                    map.projection.visibleRegion.latLngBounds,
-                    map.cameraPosition.zoom
-                )
+            if (state.isError) {
+                ErrorScreen(errorMessage = state.errorMessage)
             }
-        }
-
-        if (!permissionState.status.isGranted) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-                    .background(MineShaft77),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Sorry, we don't know your location, ",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight(500),
-                        color = Color.White
-                    )
-                )
-                TextButton(
-                    onClick = {
-                        askUserForOpeningAppSettings()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MineShaft,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text(
-                        text = "more information",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily,
-                            fontWeight = FontWeight(500),
-                        )
-                    )
-                }
-            }
-        }
-
-        if (state.isError) {
-            ErrorScreen(errorMessage = state.errorMessage)
         }
     }
 }
