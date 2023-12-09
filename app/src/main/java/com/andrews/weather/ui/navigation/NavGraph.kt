@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.andrews.weather.ui.weather_screen.DetailCityWeatherScreen
 import com.andrews.weather.ui.map_screen.MapScreen
 import com.andrews.weather.ui.map_screen.MapViewModel
+import com.andrews.weather.util.ConstValues.NAV_KEY_CITY_NAME
 
 
 @Composable
@@ -26,7 +27,7 @@ fun NavGraph(
         composable(
             route = Screen.DetailCityWeather.route,
             arguments = listOf(
-                navArgument("cityName") {
+                navArgument(NAV_KEY_CITY_NAME) {
                     type = NavType.StringType
                 }
             )

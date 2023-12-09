@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -207,7 +208,7 @@ fun DetailCityWeatherScreen() {
             )
 
             Text(
-                text = state.currentWeather?.dayOfTheWeek?.uppercase() ?: "DAY",
+                text = state.currentWeather?.dayOfTheWeek?.uppercase() ?: stringResource(id = R.string.default_day_of_week),
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
@@ -218,7 +219,7 @@ fun DetailCityWeatherScreen() {
             )
 
             Text(
-                text = state.currentWeather?.time ?: "22:22",
+                text = state.currentWeather?.time ?: stringResource(id = R.string.default_time),
                 style = TextStyle(
                     fontSize = 25.sp,
                     fontFamily = poppinsFontFamily,
@@ -234,7 +235,7 @@ fun DetailCityWeatherScreen() {
                         Locale.getDefault()
                     ) else it.toString()
                 }
-                    ?: "Description",
+                    ?: stringResource(id = R.string.default_description),
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,

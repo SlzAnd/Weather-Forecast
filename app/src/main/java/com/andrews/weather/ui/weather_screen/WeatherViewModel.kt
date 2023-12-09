@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andrews.weather.domain.repository.WeatherRepository
+import com.andrews.weather.util.ConstValues.NAV_KEY_CITY_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +19,7 @@ class WeatherViewModel(
     val state = _state.asStateFlow()
 
     init {
-        savedStateHandle.get<String>("cityName")?.let { cityName ->
+        savedStateHandle.get<String>(NAV_KEY_CITY_NAME)?.let { cityName ->
             viewModelScope.launch(Dispatchers.IO) {
                 _state.value = _state.value.copy(
                     cityName = cityName,

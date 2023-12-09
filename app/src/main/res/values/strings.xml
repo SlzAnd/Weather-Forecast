@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">weather</string>
+    <string name="default_description">Description</string>
+    <string name="default_time">00:00</string>
+    <string name="default_day_of_week">MONDAY</string>
+    <string name="permission_denied_forever">Permission are denied forever, please check your settings!</string>
+    <string name="dialog_title">Sorry, we can\'t show the weather in your location!</string>
+    <string name="dialog_text">
+                            You have denied location permission forever.
+                            But we need it to show the weather in your current location.
+                            Be sure, we don\'t send your location to other companies or people!
+                            You always can change your decision in app settings.\n\n
+                            Would you like to open the app settings?\n
+    </string>
+    <string name="dialog_button_text">Open</string>
+    <string name="unknown_location_message">Sorry, we don\'t know your location, </string>
+    <string name="unknown_location_button_text">more information</string>
 </resources>

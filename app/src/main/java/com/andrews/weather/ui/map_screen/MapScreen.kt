@@ -28,12 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.andrews.weather.R
 import com.andrews.weather.ui.components.ErrorScreen
 import com.andrews.weather.ui.theme.MineShaft
 import com.andrews.weather.ui.theme.MineShaft77
@@ -53,6 +55,8 @@ import com.google.maps.android.compose.MapsComposeExperimentalApi
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+private val DEFAULT_LOCATION_LAT_LNG = LatLng(50.45466, 30.5238); // Kyiv location
 
 @OptIn(
     MapsComposeExperimentalApi::class, ExperimentalPermissionsApi::class,
@@ -100,7 +104,7 @@ fun MapScreen(
     val currentLocation = if (state.lastKnownLocation != null) {
         LatLng(state.lastKnownLocation!!.latitude, state.lastKnownLocation!!.longitude)
     } else {
-        LatLng(50.45466, 30.5238)
+        DEFAULT_LOCATION_LAT_LNG
     }
 
     val cameraPositionState = rememberCameraPositionState {
@@ -120,27 +124,15 @@ fun MapScreen(
         ) {
             Toast.makeText(
                 context,
-                "Permission are denied forever, please check your settings!",
+                context.resources.getString(R.string.permission_denied_forever),
                 Toast.LENGTH_LONG
             ).show()
         } else {
             dialog = AlertDialog.Builder(context)
-                .setTitle("Sorry, we can't show the weather in your location!")
-                .setMessage(
-                    """
-                            You have denied location permission forever.
-                            But we need it to show the weather in your current location.
-                            Be sure, we don't send your location to other companies or people!
-                            You always can change your decision in app settings.
-
-
-                            Would you like to open the app settings?
-
-                            """
-                        .trimIndent()
-                )
+                .setTitle(context.resources.getString(R.string.dialog_title))
+                .setMessage(context.resources.getString(R.string.dialog_text).trimIndent())
                 .setPositiveButton(
-                    "Open"
+                    context.resources.getString(R.string.dialog_button_text)
                 ) { _, _ ->
                     context.startActivity(settingsIntent)
                 }
@@ -188,7 +180,7 @@ fun MapScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Sorry, we don't know your location, ",
+                        text = stringResource(id = R.string.unknown_location_message),
                         style = TextStyle(
                             fontSize = 14.sp,
                             fontFamily = poppinsFontFamily,
@@ -206,7 +198,7 @@ fun MapScreen(
                         )
                     ) {
                         Text(
-                            text = "more information",
+                            text = stringResource(id = R.string.unknown_location_button_text),
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontFamily = poppinsFontFamily,
