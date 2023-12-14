@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -42,7 +43,7 @@ import com.andrews.weather.ui.theme.MineShaft77
 import com.andrews.weather.ui.theme.poppinsFontFamily
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -71,18 +72,31 @@ fun MapScreen(
     var dialog: AlertDialog?
     val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
-    val permissionState =
-        rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
+    val permissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        rememberMultiplePermissionsState(
+            permissions = listOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.POST_NOTIFICATIONS
+            )
+        )
+    } else {
+        rememberMultiplePermissionsState(
+            permissions = listOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            )
+        )
+    }
+
     val lifecycleOwner = LocalLifecycleOwner.current
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START) {
-                permissionState.launchPermissionRequest()
+                permissionState.launchMultiplePermissionRequest()
             }
 
             if (event == Lifecycle.Event.ON_RESUME) {
-                if (permissionState.status.isGranted) {
+                if (permissionState.permissions[0].status.isGranted) {
                     viewModel.getDeviceLocation(fusedLocationProviderClient)
                 }
             }
@@ -170,7 +184,7 @@ fun MapScreen(
                 }
             }
 
-            if (!permissionState.status.isGranted) {
+            if (!permissionState.permissions[0].status.isGranted) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

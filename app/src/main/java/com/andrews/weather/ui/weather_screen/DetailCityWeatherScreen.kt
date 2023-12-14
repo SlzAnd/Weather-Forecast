@@ -11,8 +11,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -66,7 +70,8 @@ fun DetailCityWeatherScreen() {
     }
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         Image(
             painter = painterResource(id = R.drawable.city_bg),
@@ -84,7 +89,8 @@ fun DetailCityWeatherScreen() {
 
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -114,7 +120,7 @@ fun DetailCityWeatherScreen() {
 
                 if (isCelsius) {
                     Text(
-                        text = temperature?.absoluteValue.toString(),
+                        text = temperature?.absoluteValue?.toString() ?: "0",
                         style = TextStyle(
                             fontSize = 101.sp,
                             fontFamily = poppinsFontFamily,
@@ -208,7 +214,8 @@ fun DetailCityWeatherScreen() {
             )
 
             Text(
-                text = state.currentWeather?.dayOfTheWeek?.uppercase() ?: stringResource(id = R.string.default_day_of_week),
+                text = state.currentWeather?.dayOfTheWeek?.uppercase()
+                    ?: stringResource(id = R.string.default_day_of_week),
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
@@ -247,16 +254,16 @@ fun DetailCityWeatherScreen() {
                     .padding(top = 6.dp)
             )
 
-            Box(modifier = Modifier.fillMaxSize()) {
-                ForecastList(
-                    modifier = Modifier
-                        .padding(bottom = 44.dp)
-                        .align(Alignment.BottomCenter),
-                    list = state.dailyWeatherList
-                )
-            }
+            Spacer(modifier = Modifier.height(112.dp))
+
+            ForecastList(
+                modifier = Modifier
+                    .padding(bottom = 44.dp),
+                list = state.dailyWeatherList
+            )
         }
     }
+
 
     if (isLoading) {
         Box(
@@ -273,5 +280,4 @@ fun DetailCityWeatherScreen() {
             )
         }
     }
-
 }

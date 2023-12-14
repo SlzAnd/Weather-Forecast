@@ -21,6 +21,13 @@ interface OpenWeatherMapApi {
         @Query("units") units: String = "metric",
     ): CityWeatherForecastDto
 
+    @GET("data/2.5/forecast?appid=$API_KEY")
+    suspend fun getWeatherForecastForCityFromLocation(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("units") units: String = "metric",
+    ): CityWeatherForecastDto
+
     @GET("data/2.5/box/city?appid=$API_KEY")
     suspend fun getListOfCities(
         @Query("bbox") bbox: String

@@ -58,11 +58,29 @@ fun CityWeatherForecastDto.toCityWeatherForecast(): List<DailyWeather> {
                         humidity = list[3].main.humidity, // humidity 12:00
                         dayTemperature = list[3].main.temp.toInt(), // day temperature 12:00
                         nightTemperature = list[7].main.temp.toInt(), // night temperature 00:00
+                        description = list[3].weather[0].description
                     )
                 )
             }
             return resultList
         }
+}
+
+fun CityWeatherForecastDto.toTodayWeatherForecast(): Map<String, DailyWeather> {
+    val numberOfForecasts = list
+        .filter { convertDateTimeTxtToLocalDateTime(it.dt_txt).dayOfYear == LocalDateTime.now().dayOfYear } // get current day forecast
+        .size
+
+    return mapOf(
+        city.name to DailyWeather(
+            dayOfTheWeek = convertDateTimeTxtToDayOfTheWeek(list[0].dt_txt),
+            icon = WeatherIcon.fromIconCode(list[0].weather[0].id), // current weather icon 12:00
+            humidity = list[0].main.humidity, // current humidity 12:00
+            dayTemperature = list[0].main.temp.toInt(), // current temperature 12:00
+            nightTemperature = list[numberOfForecasts].main.temp.toInt(), // night temperature 00:00
+            description = list[0].weather[0].description // current weather description
+        )
+    )
 }
 
 fun CityWeatherDto.toCurrentWeather(): CurrentWeather {

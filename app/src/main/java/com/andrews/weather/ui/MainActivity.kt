@@ -32,6 +32,10 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.andrews.weather.ui.components.BottomSheet
 import com.andrews.weather.ui.map_screen.MapViewModel
 import com.andrews.weather.ui.navigation.NavGraph
@@ -40,13 +44,16 @@ import com.andrews.weather.ui.theme.MineShaft
 import com.andrews.weather.ui.theme.WeatherTheme
 import com.andrews.weather.ui.theme.poppinsFontFamily
 import com.andrews.weather.util.ConnectivityReceiver
+import com.andrews.weather.util.WeatherForecastWorker
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
     private val mapViewModel by viewModel<MapViewModel>()
     private var isConnected by mutableStateOf(false)
+    private val workManager = WorkManager.getInstance(this)
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +63,18 @@ class MainActivity : ComponentActivity(), ConnectivityReceiver.ConnectivityRecei
             ConnectivityReceiver(),
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
+
+        val weatherNotificationsWorkRequest =
+            PeriodicWorkRequestBuilder<WeatherForecastWorker>(15L, TimeUnit.MINUTES)
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build()
+                )
+                .setInitialDelay(10L, TimeUnit.SECONDS)
+                .build()
+
+        workManager.enqueue(weatherNotificationsWorkRequest)
 
         setContent {
             WeatherTheme {
@@ -148,5 +167,10 @@ class MainActivity : ComponentActivity(), ConnectivityReceiver.ConnectivityRecei
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         this.isConnected = isConnected
         mapViewModel.changeConnectionStatus(isConnected)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        workManager.cancelAllWork()
     }
 }

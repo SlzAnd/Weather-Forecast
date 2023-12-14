@@ -91,11 +91,14 @@ dependencies {
     // KTX for the Maps SDK for Android Utility Library
     implementation("com.google.maps.android:maps-utils-ktx:3.2.1")
 
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 
     val koin_android_version = "3.5.2-RC1"
     implementation("io.insert-koin:koin-android:$koin_android_version")
     implementation("io.insert-koin:koin-androidx-navigation:$koin_android_version")
     implementation("io.insert-koin:koin-androidx-compose:$koin_android_version")
+    implementation("io.insert-koin:koin-androidx-workmanager:$koin_android_version")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

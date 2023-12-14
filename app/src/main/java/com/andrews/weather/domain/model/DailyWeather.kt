@@ -7,5 +7,6 @@ data class DailyWeather(
     val icon: WeatherIcon,
     val humidity: Int,
     val dayTemperature: Int,
-    val nightTemperature: Int
+    val nightTemperature: Int,
+    val description: String,
 )

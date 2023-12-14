@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MapViewModel(
-    private val repository: MapRepository
+    private val mapRepository: MapRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(MapState())
@@ -40,7 +40,7 @@ class MapViewModel(
     fun updateBounds(updatedBounds: LatLngBounds, zoom: Float) {
         viewModelScope.launch(Dispatchers.IO) {
             if (state.value.isConnected) {
-                val result = repository.getCitiesInTheArea(updatedBounds, zoom)
+                val result = mapRepository.getCitiesInTheArea(updatedBounds, zoom)
                 when (result) {
                     is Resource.Error -> {
                         _state.value = _state.value.copy(
