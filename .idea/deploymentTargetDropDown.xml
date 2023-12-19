@@ -2,7 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ListPreview">
+      <entry key="BottomSheetTest">
         <State />
       </entry>
       <entry key="app">
@@ -13,12 +13,28 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_7_API_31_12_Android_.avd" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_6a_API_32.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-12-06T14:08:07.864258817Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-12-19T10:36:49.413558732Z" />
+        </State>
+      </entry>
+      <entry key="test12123()">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_6a_API_32.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-12-19T10:36:59.585355963Z" />
         </State>
       </entry>
     </value>

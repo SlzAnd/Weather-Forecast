@@ -1,0 +1,49 @@
+{
+  "coord": {
+    "lon": 30.4898,
+    "lat": 50.5848
+  },
+  "weather": [
+    {
+      "id": 500,
+      "main": "Rain",
+      "description": "light rain",
+      "icon": "10n"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 6.46,
+    "feels_like": 3.37,
+    "temp_min": 4.88,
+    "temp_max": 6.61,
+    "pressure": 1021,
+    "humidity": 82,
+    "sea_level": 1021,
+    "grnd_level": 1008
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 4.55,
+    "deg": 286,
+    "gust": 10.37
+  },
+  "rain": {
+    "1h": 0.12
+  },
+  "clouds": {
+    "all": 100
+  },
+  "dt": 1702918167,
+  "sys": {
+    "type": 2,
+    "id": 2089522,
+    "country": "UA",
+    "sunrise": 1702878882,
+    "sunset": 1702907649
+  },
+  "timezone": 7200,
+  "id": 688723,
+  "name": "Vyshhorod",
+  "cod": 200
+}

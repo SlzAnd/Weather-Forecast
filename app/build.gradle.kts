@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("com.android.application")
@@ -17,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.andrews.weather.InstrumentationTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -51,6 +50,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    sourceSets {
+        named("test") {
+            resources.srcDirs("src/test/resources")
+        }
+    }
 }
 
 dependencies {
@@ -77,6 +81,11 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    testImplementation("com.google.truth:truth:1.1.4")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.6.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("org.mockito:mockito-core:5.8.0")
+
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.7.5")

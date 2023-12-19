@@ -1,0 +1,44 @@
+{
+  "cod": 200,
+  "calctime": 0.000440127,
+  "cnt": 1,
+  "list": [
+    {
+      "id": 5536630,
+      "dt": 1702916215,
+      "name": "Cedar City",
+      "coord": {
+        "Lon": -113.0619,
+        "Lat": 37.6775
+      },
+      "main": {
+        "temp": 7.36,
+        "feels_like": 6.34,
+        "temp_min": 7.36,
+        "temp_max": 7.36,
+        "pressure": 1018,
+        "sea_level": 1018,
+        "grnd_level": 824,
+        "humidity": 27
+      },
+      "visibility": 10000,
+      "wind": {
+        "speed": 1.77,
+        "deg": 148
+      },
+      "rain": null,
+      "snow": null,
+      "clouds": {
+        "today": 100
+      },
+      "weather": [
+        {
+          "id": 804,
+          "main": "Clouds",
+          "description": "overcast clouds",
+          "icon": "04d"
+        }
+      ]
+    }
+  ]
+}
